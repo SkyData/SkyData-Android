@@ -1,0 +1,124 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+
+package skydata.core.FolderTree;
+
+import java.util.ArrayList;
+import java.util.TreeMap;
+import java.util.Iterator;
+import java.util.Map;
+
+/**
+ *
+ * @author ivan
+ */
+public class TreeFunctions {
+    //Location is FileNode Remote or Local, is used to compare dates
+    public static ArrayList<Diff> createDiff(String name,FolderNode oldf, FolderNode newf,int location) {
+        TreeMap<String, Node> mo = oldf.getMap();
+        TreeMap<String, Node> mn = newf.getMap();
+        Iterator ito = mo.entrySet().iterator();
+        Iterator itn = mn.entrySet().iterator();
+        ArrayList<Diff> actions = new ArrayList<Diff>();
+        ArrayList<Diff> recactions = new ArrayList<Diff>();
+        int j = 0;
+        while(ito.hasNext() && itn.hasNext()) {
+            Map.Entry eo = (Map.Entry)ito.next();
+            Map.Entry en = (Map.Entry)itn.next();
+            String so = (String) eo.getKey();
+            String sn = (String) en.getKey();
+            if(!so.equals(sn)) {
+                if(sn.compareTo(so) < 0){
+                    //add
+                    actions.add(new Diff(Diff.ADD, sn, (Node) en.getValue(), name, oldf));
+                }
+                else {
+                    //rm
+                    actions.add(new Diff(Diff.REMOVE, so, (Node) eo.getValue(),name,oldf));
+                }
+            }
+            else {
+                FileNode fno = (FileNode) eo.getValue();
+                FileNode fnn = (FileNode) en.getValue();
+                if(((Node) eo.getValue()).getClass().equals(FolderNode.class)) {
+                    if(fno.getDate(location).compareTo(fnn.getDate(location)) < 0) {
+                        recactions.addAll(createDiff(so,(FolderNode)eo.getValue(), (FolderNode) eo.getValue(),location));
+                    }
+                } else {
+                    if(fno.getDate(location).compareTo(fnn.getDate(location)) < 0) {
+                        if(fno.getHash().compareTo(fnn.getHash()) < 0) {
+                            actions.add(new Diff(Diff.ADD, sn ,(Node) en.getValue(),name,oldf));
+                        }
+                    }
+                }
+            }
+        }
+        while(ito.hasNext()) {
+            //rm
+            Map.Entry eo = (Map.Entry)ito.next();
+            String so = (String) eo.getKey();
+            actions.add(new Diff(Diff.REMOVE, so, (Node) eo.getValue(),name,oldf));
+        }
+        while(itn.hasNext()) {
+            //add
+            Map.Entry en = (Map.Entry)itn.next();
+            String sn = (String) en.getKey();
+            actions.add(new Diff(Diff.ADD, sn, (Node) en.getValue(),name,oldf));
+        }
+        actions.addAll(recactions);
+        return actions;
+    }
+
+    public static void treatConflicts(ArrayList<Diff> local,ArrayList<Diff> remote) {
+        int i = 0;
+        int j = 0;
+        while(i < local.size() && j < remote.size()) {
+            String sl = local.get(i).getParentName();
+            String sr = remote.get(j).getParentName();
+            if(!sl.equals(sr)) {
+                if(sl.compareTo(sr) < 0) {
+                    ++i;
+                }
+                else {
+                    ++j;
+                }
+            }
+            else {
+                String namel = local.get(i).getName();
+                String namer = remote.get(j).getName();
+                if(!namel.equals(namer)) {
+                    if(namel.compareTo(namer) < 0) {
+                        ++i;
+                    }
+                    else {
+                        ++j;
+                    }
+                }
+                else {
+                    local.get(i).setConflict();
+                    ++i;
+                    ++j;
+                }
+            }
+        }
+    }
+
+    private static void printTree(String name, FolderNode folder,String space) {
+        TreeMap<String, Node> map = folder.getMap();
+        Iterator it = map.entrySet().iterator();
+        while(it.hasNext()) {
+            Map.Entry e = (Map.Entry)it.next();
+            System.out.println(space+e.getKey());
+            if(e.getValue().getClass().equals(FolderNode.class)) {
+                printTree((String) e.getKey(), (FolderNode) e.getValue(),space+"  ");
+            }
+        }
+    }
+
+    public static void printTree(String name, FolderNode folder) {
+        System.out.println(name);
+        printTree(name,folder,"  ");
+    }
+}

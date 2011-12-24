@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/pablo.rodriguez.fernandez/!svn/ver/689/pxc/proyecto/trunk/client/src/skydata/core/WebService
+END
+Mkdir.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/pablo.rodriguez.fernandez/!svn/ver/689/pxc/proyecto/trunk/client/src/skydata/core/WebService/Mkdir.java
+END
+DirList.java
+K 25
+svn:wc:ra_dav:version-url
+V 110
+/svn/pablo.rodriguez.fernandez/!svn/ver/689/pxc/proyecto/trunk/client/src/skydata/core/WebService/DirList.java
+END
+Login.java
+K 25
+svn:wc:ra_dav:version-url
+V 108
+/svn/pablo.rodriguez.fernandez/!svn/ver/668/pxc/proyecto/trunk/client/src/skydata/core/WebService/Login.java
+END
+Download.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/pablo.rodriguez.fernandez/!svn/ver/689/pxc/proyecto/trunk/client/src/skydata/core/WebService/Download.java
+END
+TreeService.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/pablo.rodriguez.fernandez/!svn/ver/688/pxc/proyecto/trunk/client/src/skydata/core/WebService/TreeService.java
+END
+RemoteDir.java
+K 25
+svn:wc:ra_dav:version-url
+V 112
+/svn/pablo.rodriguez.fernandez/!svn/ver/689/pxc/proyecto/trunk/client/src/skydata/core/WebService/RemoteDir.java
+END
+HttpTransportBasicAuth.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/pablo.rodriguez.fernandez/!svn/ver/457/pxc/proyecto/trunk/client/src/skydata/core/WebService/HttpTransportBasicAuth.java
+END
+Remove.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/pablo.rodriguez.fernandez/!svn/ver/688/pxc/proyecto/trunk/client/src/skydata/core/WebService/Remove.java
+END
+Upload.java
+K 25
+svn:wc:ra_dav:version-url
+V 109
+/svn/pablo.rodriguez.fernandez/!svn/ver/689/pxc/proyecto/trunk/client/src/skydata/core/WebService/Upload.java
+END
